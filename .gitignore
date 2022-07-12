@@ -13,6 +13,7 @@ otter.properties
 jtester.properties
 .idea/
 *.iml
+**.iml
 .DS_Store
 *.tar.gz
 *.rpm

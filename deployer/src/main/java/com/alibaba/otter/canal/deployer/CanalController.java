@@ -140,6 +140,7 @@ public class CanalController {
 
         final ServerRunningData serverData = new ServerRunningData(registerIp + ":" + port);
         ServerRunningMonitors.setServerData(serverData);
+        //获取时初始化
         ServerRunningMonitors.setRunningMonitors(MigrateMap.makeComputingMap((Function<String, ServerRunningMonitor>) destination -> {
             ServerRunningMonitor runningMonitor = new ServerRunningMonitor(serverData);
             runningMonitor.setDestination(destination);
@@ -149,6 +150,7 @@ public class CanalController {
                 public void processActiveEnter() {
                     try {
                         MDC.put(CanalConstants.MDC_DESTINATION, String.valueOf(destination));
+                        //组件启动入口
                         embededCanalServer.start(destination);
                         if (canalMQStarter != null) {
                             canalMQStarter.startDestination(destination);
@@ -222,6 +224,7 @@ public class CanalController {
         }));
 
         // 初始化monitor机制
+        //自动扫描配置
         autoScan = BooleanUtils.toBoolean(getProperty(properties, CanalConstants.CANAL_AUTO_SCAN));
         if (autoScan) {
             defaultAction = new InstanceAction() {

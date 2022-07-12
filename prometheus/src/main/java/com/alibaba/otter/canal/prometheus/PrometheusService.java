@@ -93,6 +93,7 @@ public class PrometheusService implements CanalMetricsService {
             return;
         }
         try {
+            //注册实例的上下文组件
             instanceExports.register(instance);
         } catch (Throwable t) {
             logger.warn("Unable to register instance exports for {}.", instance.getDestination(), t);

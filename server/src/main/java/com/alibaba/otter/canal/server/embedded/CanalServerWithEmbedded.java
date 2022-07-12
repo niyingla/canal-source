@@ -120,14 +120,21 @@ public class CanalServerWithEmbedded extends AbstractCanalLifeCycle implements C
         return false;
     }
 
+    /**
+     * 重要入口
+     * @param destination
+     */
     public void start(final String destination) {
+        //每个destination 都有一个CanalInstanceWithSpring
         final CanalInstance canalInstance = canalInstances.get(destination);
+        //判断是否已经启动
         if (!canalInstance.isStart()) {
             try {
                 MDC.put("destination", destination);
                 if (metrics.isRunning()) {
                     metrics.register(canalInstance);
                 }
+                //com.alibaba.otter.canal.instance.spring.CanalInstanceWithSpring.start
                 canalInstance.start();
                 logger.info("start CanalInstances[{}] successfully", destination);
             } finally {
